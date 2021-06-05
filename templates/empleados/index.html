@@ -1,0 +1,51 @@
+    {% include 'header.html' %}
+    <br>
+    <form action="/filter" method="POST" enctype="multipart/form-data">
+    <div class="row offset-md-8">  
+        <div class="col-8">
+            <select name="FiltEstado" id="FiltEstado" class="form-control ">
+                <option hidden selected>Selecciona una opción</option>
+                <option value="" href="{{url_for('index')}}" >Todos</option>
+                <option value="Habilitado">Habilitado</option>
+                <option value="Deshabilitado">Deshabilitado</option>
+              </select>
+        </div>
+        <br>
+         <div class="col-4">
+             <button type="submit" href="{{url_for('filter')}}" class="btn btn-primary">Filtar</button>
+            </div>
+        </div>
+    </form>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados  %}
+            <tr class="table-info">
+                <td>{{empleado[0] }}</td>
+
+                <td>
+                    <img class="img-thumbnail" width="100" src="uploads/{{empleado[4]}}" alt="">
+                </td>
+
+                <td>{{empleado[1] }}</td>
+                <td>{{empleado[3] }}</td>
+                <td>{{empleado[5]}}</td>
+                <td>
+                    <a onclick="return  confirm('¿Desea Eliminar el registro?')" href="/destroy/{{empleado[0]}}" class="btn btn-danger" >Eliminar</a>
+                    <a class="btn btn-warning" href="/edit/{{empleado[0]}}" >Editar</a>
+                </td>
+            </tr>                
+            {% endfor %}
+        </tbody>
+    </table>
+{% include 'footer.html' %}

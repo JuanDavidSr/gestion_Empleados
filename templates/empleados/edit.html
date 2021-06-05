@@ -1,0 +1,65 @@
+{% include 'header.html' %}
+{% for empleado in empleados %}
+
+{% with messages = get_flashed_messages()%}
+
+{% if messages %}
+    <div class="alert alert-danger" role="alert"> 
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    <div>
+{% endif %}
+
+{% endwith %}
+
+
+<form action="/update" method="POST" enctype="multipart/form-data" class="">
+    <div class="col-md-6 offset-md-3 col-12" >
+       <div class="col-12 ">
+          <h5 class="card-title text-center">Datos del empleado</h5>
+       </div>
+
+        <div class="col-5  offset-md-3 justify-content-center">
+         <label for="txtFoto"></label>
+          <img class="img-thumbnail "
+            width="200px"
+            src="{{url_for('uploads', nombreFoto=empleado[4]) }}" ><br>
+          <input type="file" name="txtFoto" id="txtFoto"  class="form-control" style="color: transparent">     
+        </div>
+        
+       <div class="col-12 justify-content-center text-center ">
+        <label for="txtNombre">Nombre:</label>
+         <input type="text" value="{{empleado[1]}}" name="txtNombre" id="txtNombre" class="form-control text-center" >
+       </div>
+       <div class="col-12 justify-content-center text-center">
+        <label for="txtCedula">Cedula:</label>
+        <input type="text" value="{{empleado[2]}}" name="txtCedula" id="txtCedula" class="form-control text-center" >
+       </div>
+        
+       <div class="col-12 justify-content-center text-center">
+         <label for="txtCorreo">Correo:</label>
+         <input type="text" name="txtCorreo" id="txtCorreo" value="{{empleado[3]}}" class="form-control text-center">
+       </div>
+
+      <div class="col-12 align-self-end center text-center">
+        <label for="txtEstado">Estado:</label>
+         <select name="txtEstado" id="txtEstado" class="form-control ">
+          <option value=""></option>
+          <option value="Habilitado">Habilitado</option>
+          <option value="Deshabilitado">Deshabilitado</option>
+        </select>
+      </div>
+      
+       <input type="hidden" value="{{empleado[0]}}"  name="txtID" id="txtID">
+             <br>
+       <div class="col-12 align-self-end center text-center">
+                  <input class="btn btn-success"  type="submit" value="Agregar">
+                  <a href="{{url_for('index')}}" class="btn btn-primary">Atras</a>
+                  <a href="{{url_for('sueldos')}}" class="btn btn-success">Adiccionar sueldo</a>
+      </div>
+    </div>
+</form>
+
+{% endfor %}
+{% include 'footer.html' %}
